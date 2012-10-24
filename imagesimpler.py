@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import Image
 import webcolors
 import math
@@ -5,9 +6,9 @@ import math
 
 class ImageSimpler():
 	"""
-	Purpose: To take an image and "round" all colors to one of a specified list of colors and then write out the mutated image
+	Purpose: To take an image and "round" all colors to one of a specified list of colors and then return the mutated image
 	Inputs: image to be manipulated, colors to be "rounded to", scaled size of the image
-	Outputs: Nothing really
+	Outputs: The mutated image
 	"""
 
 	def simplify(self, imagefile, colors, percentsize):
@@ -40,7 +41,7 @@ class ImageSimpler():
 						closest = rgb
 				pixels[x,y] = closest
 
-		image.show()
+		return image
 
 
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import re
 import string
 import numpy
@@ -97,7 +99,7 @@ class CooccurrenceFinder():
 				if (counts[word][coll]-av)/std > 1.96:
 					sigCos[word].append(coll)
 
-		print sigCos
+		return sigCos
 
 if __name__ == '__main__':
 	cf = CooccurrenceFinder()
