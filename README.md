@@ -3,6 +3,9 @@ Synesthesia
 
 Project that will take in an image and replace the colors with words associated with the color
 
+Concept: Natan Last
+Execution: Jenna Zeigen
+
 Components:
 -----------
 1. cooccurrence.py -- This is the module that makes the lists of words are associated with the colors.
