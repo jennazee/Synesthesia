@@ -11,34 +11,40 @@ import json
 
 class CooccurrenceFinder():
 
-	def corpus_scraper(self, word, numdocs):
+	def corpus_scraper(self, word, numdocs, redo=False):
 		"""
 		Purpose: Scrapes Wikipedia search results for a word and compiles all text to a single text file
-		Inputs: Words to be searched for, number of documents to be scraped (the more the better the results)
+		Inputs: Words to be searched for, number of documents to be scraped (the more the better the results), if corpuses for the word should be re-scraped due to changes in parameters, etc
 		Outputs: The file path of the written file
 		"""
+		genCorpus = False
+		try:
+			open('corpuses/'+word+'_corpuses.txt')
+		except IOError:
+			genCorpus = True
 
-		req = urllib2.Request(url='http://en.wikipedia.org/w/index.php?title=Special:Search&search='+str(word)+'&fulltext=Search&profile=advanced&redirs=1', headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15'})
-		site = urllib2.urlopen(req)
-		results = BeautifulSoup(site)
-		site.close()
-
-		anchors = []
-		
-		for link in results.find('ul', {'class':'mw-search-results'}).find_all('a')[0:numdocs]:
-			anchors.append(link.get('href'))
-
-		output = open(str(word)+'_corpuses.txt', 'w')
-		for anchor in anchors:
-			req = urllib2.Request(url='http://en.wikipedia.org'+str(anchor), headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15'})
+		if genCorpus or redo:
+			req = urllib2.Request(url='http://en.wikipedia.org/w/index.php?title=Special:Search&search='+str(word)+'&fulltext=Search&profile=advanced&redirs=1', headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15'})
 			site = urllib2.urlopen(req)
-			page = BeautifulSoup(site)
+			results = BeautifulSoup(site)
 			site.close()
-			output.write(page.find('div', {'class':'mw-body'}).get_text().encode('utf8')+'\n\n\n')
 
-		output.close()
+			anchors = []
+			
+			for link in results.find('ul', {'class':'mw-search-results'}).find_all('a')[0:numdocs]:
+				anchors.append(link.get('href'))
 
-		return str(word)+'_corpuses.txt'
+			output = open('corpuses/'+word+'_corpuses.txt', 'w')
+			for anchor in anchors:
+				req = urllib2.Request(url='http://en.wikipedia.org'+str(anchor), headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15'})
+				site = urllib2.urlopen(req)
+				page = BeautifulSoup(site)
+				site.close()
+				output.write(page.find('div', {'class':'mw-body'}).get_text().encode('utf8')+'\n\n\n')
+
+			output.close()
+
+		return 'corpuses/'+word+'_corpuses.txt'
 
 	#TODO: make this algorithm weighted by distance
 	def find_relateds(self, corpus, words, distance):
@@ -103,6 +109,4 @@ class CooccurrenceFinder():
 
 if __name__ == '__main__':
 	cf = CooccurrenceFinder()
-	#cf.find_relateds(cf.corpus_scraper('cat', 5),['cat'], 50)
-	cf.find_relateds('orange_corpuses.txt', [orange], 4)
-	
+	cf.find_relateds(cf.corpus_scraper('cat', 5),['cat'], 50)	
