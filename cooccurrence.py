@@ -49,8 +49,6 @@ class CooccurrenceFinder():
 		"""
 
 		#TODO: make it so that a newline wipes out the possibility of a 
-		#m = re.findall(r'amendments? (\w+)', text)
-
 		file = open(corpus, 'r')
 		text = file.read().lower()
 		file.close()
@@ -60,13 +58,14 @@ class CooccurrenceFinder():
 		file.close()
 		stopwords = dump.split()
 
+		#since this is being used for colors for now, I don't want, for example, 'blue' to be in 'red's' associate list
 		stopwords.extend(['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'white', 'black', 'color', 'colors', 'colour', 'colours'])
 
-		#making lists of words
 		pairs = {}
 		counts = {}
 		sigCos = {}
 
+		#building and executing the regex query, finding words that are a certain distance from the the target word
 		for word in words:
 			term = [word+'s?', r' (\w+)']
 			pairs[word] = {}
@@ -79,8 +78,9 @@ class CooccurrenceFinder():
 					pairs[word][i] = re.findall(''.join(term), text)
 
 				#figuring out number of occurrences -- FLAT for now
+				#TODO: make it so that closer words carry more significance
 				for targ in pairs[word][i]:
-					if stopwords.count(targ)>0 or targ==word:
+					if stopwords.count(targ)>0 or re.search(word, targ):
 						continue
 					elif targ in counts[word]:
 						counts[word][targ]+=1
@@ -103,5 +103,6 @@ class CooccurrenceFinder():
 
 if __name__ == '__main__':
 	cf = CooccurrenceFinder()
-	cf.find_relateds(cf.corpus_scraper('cat', 5),['cat'], 50)
+	#cf.find_relateds(cf.corpus_scraper('cat', 5),['cat'], 50)
+	cf.find_relateds('orange_corpuses.txt', [orange], 4)
 	

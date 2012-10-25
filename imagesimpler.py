@@ -31,6 +31,7 @@ class ImageSimpler():
 		for x in range(image.size[0]):
 			for y in range(image.size[1]):
 				pix = pixels[x,y]
+				#initial settings soon to be overridden
 				closest = None
 				mindist = float('Inf')
 				#find which rgb triplet is the closest through Euclidean distance of their vectors
@@ -44,6 +45,6 @@ class ImageSimpler():
 		return image
 
 
-if __name__ == '__main__':
-	iSimp = ImageSimpler()
-	iSimp.simplify('../lime-cat.jpg', ['green','red', 'yellow', 'white', 'black', 'orange'], 50)
+# if __name__ == '__main__':
+# 	iSimp = ImageSimpler()
+# 	iSimp.simplify('../lime-cat.jpg', ['green','red', 'yellow', 'white', 'black', 'orange'], 50)
