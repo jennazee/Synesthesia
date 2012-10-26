@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from __future__ import division
 import Image
 import webcolors
 from imagesimpler import ImageSimpler
@@ -7,6 +8,7 @@ from cooccurrence import CooccurrenceFinder
 import copy
 from pygame import font, Surface
 from pygame import image as PyImage
+
 
 """
 ** This module takes an image and replaces each pixel with a word that is associated with the color that pixel displays **
@@ -23,12 +25,6 @@ class Synesthesizer():
 		Inputs: Image to be adulterated, colors to be used
 		Outputs: Nothing really -- saves image to disk
 		"""
-		print 'Simplifying the Image'
-
-		iSimp = ImageSimpler()
-		img = iSimp.simplify(image, colors, 25)
-		pixor = img.load()
-		img.show()
 
 		#take the list of requested colors and get a "word palatte" for each word
 		associates = {}
@@ -41,12 +37,18 @@ class Synesthesizer():
 		storage = copy.deepcopy(associates)
 
 		#to be the word representation of the image
-		textsize = 12
+		textsize = 14
 
 		font.init()
-		texter = font.SysFont('couriernew', textsize)
+		texter = font.SysFont('corbel', textsize)
 		
-		(letWidth, letHeight) = texter.size('A')
+		(letWidth, letHeight) = texter.size('a')
+
+		print 'Simplifying the Image'
+		iSimp = ImageSimpler()
+		preimg = iSimp.simplify(image, colors, 25)
+		img = preimg.resize((preimg.size[0], int(preimg.size[1]*(letWidth/letHeight))))
+		pixor = img.load()
 
 		newH = img.size[1]*letHeight
 		newW = img.size[0]*letWidth
