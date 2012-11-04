@@ -1,0 +1,8 @@
+h1, h2, blockquote {
+	text-align: center;
+}
+
+blockquote{
+	width: 300px;
+	margin: 20px auto;
+}
