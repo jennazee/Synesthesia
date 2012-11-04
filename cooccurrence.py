@@ -65,7 +65,7 @@ class CooccurrenceFinder():
 		stopwords = dump.split()
 
 		#since this is being used for colors for now, I don't want, for example, 'blue' to be in 'red's' associate list
-		stopwords.extend(['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'white', 'black', 'color', 'colors', 'colour', 'colours'])
+		stopwords.extend(['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'white', 'black', 'color', 'colors', 'colour', 'colours'])
 
 		pairs = {}
 		counts = {}
@@ -93,7 +93,7 @@ class CooccurrenceFinder():
 					else:
 						counts[word][targ]=1
 
-		##see if any of the words occur >1.96 SDs from the mean, or outside of a 95% tolerance interval
+		#see if any of the words occur >1.96 SDs from the mean, or outside of a 95% tolerance interval
 		for word in words:
 			sigCos[word]=[]
 			allCounts = []

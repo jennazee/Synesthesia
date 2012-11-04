@@ -6,8 +6,11 @@ import webcolors
 from imagesimpler import ImageSimpler
 from cooccurrence import CooccurrenceFinder
 import copy
+import string
+from random import choice
 from pygame import font, Surface
 from pygame import image as PyImage
+import sys
 
 
 """
@@ -19,7 +22,7 @@ Execution: Jenna Zeigen (github.com/jennazee)
 
 class Synesthesizer():
 
-	def synesthesize(self, image, colors=['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'white', 'black', 'gray']):
+	def synesthesize(self, image, colors=['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'white', 'black', 'gray', 'brown']):
 		"""
 		Purpose: Take an image, replace all the colors with words associated with the colors, saves the image to disk
 		Inputs: Image to be adulterated, colors to be used
@@ -27,34 +30,35 @@ class Synesthesizer():
 		"""
 
 		#take the list of requested colors and get a "word palatte" for each word
-		associates = {}
-		storage = {}
+		self.associates = {}
+		self.storage = {}
 		for color in colors:
 			print 'Building associates for ' + str(color)
 			worder = CooccurrenceFinder()
-			associates[color] = worder.find_relateds(worder.corpus_scraper(color, 20), [color], 15)[color]
+			self.associates[color] = worder.find_relateds(worder.corpus_scraper(color, 20), [color], 15)[color]
 
-		storage = copy.deepcopy(associates)
+		self.storage = copy.deepcopy(self.associates)
 
 		#to be the word representation of the image
 		textsize = 14
 
 		font.init()
-		texter = font.SysFont('corbel', textsize)
+		self.texter = font.SysFont('corbel', textsize)
 		
-		(letWidth, letHeight) = texter.size('a')
+		(letWidth, letHeight) = self.texter.size('a')
 
 		print 'Simplifying the Image'
-		iSimp = ImageSimpler()
-		preimg = iSimp.simplify(image, colors, 25)
-		img = preimg.resize((preimg.size[0], int(preimg.size[1]*(letWidth/letHeight))))
+		self.iSimp = ImageSimpler()
+		self.preimg = self.iSimp.simplify(image, colors, 25)
+		preimg.save('simpleimg.jpg')
+		self.img = self.preimg.resize((self.preimg.size[0], int(self.preimg.size[1]*(letWidth/letHeight))))
 		pixor = img.load()
 
-		newH = img.size[1]*letHeight
-		newW = img.size[0]*letWidth
+		newH = self.img.size[1]*letHeight
+		newW = self.img.size[0]*letWidth
 
-		synpic = Surface((newW, newH))
-		synpic.fill((255,255,255))
+		self.synpic = Surface((newW, newH))
+		self.synpic.fill((255,255,255))
 
 		#replace pixel with words. One pixel -> one character.
 		x = 0
@@ -84,7 +88,9 @@ class Synesthesizer():
 				y+=1
 				x=0
 
-		PyImage.save(synpic, 'output.jpg')
+		name = ''.join([choice(string.ascii_letters + string.digits) for n in range(30)])
+		PyImage.save(synpic, 'creations/' +name + '.jpg')
+		return 'creations/' +name + '.jpg'
 
 if __name__ == '__main__':
 	syn = Synesthesizer()
