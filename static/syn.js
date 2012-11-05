@@ -8,7 +8,7 @@ $('document').ready(function(){
 
 	$.getJSON('/fonts', function(data){
 		$.each(data, function(i, v){
-			$('#font-select').append('<option name="font">'+v+'</option>')
+			$('#font-select').append('<option value="'+v+'">'+v+'</option>')
 		})
 	})
 });

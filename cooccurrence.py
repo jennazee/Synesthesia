@@ -74,10 +74,9 @@ class CooccurrenceFinder():
 		for i in range(distance):
 			self.tally_occurrences(word, pairs[i], stopwords)
 
-		print self.find_significant_cooccurrences(self.counts, stdevs)
+		return self.find_significant_cooccurrences(self.counts, stdevs)
 
 
-	#building and executing the regex query, finding words that are a certain distance after a target word
 	#TODO: add before word functionality
 	def find_close_words(self, dist, text, word):
 		term = [word+'s?', r' (\w+)']
@@ -91,10 +90,8 @@ class CooccurrenceFinder():
 
 		return temp_pairs
 
-
+	#TODO: make it so that closer words carry more significance
 	def tally_occurrences(self, word, pair_set, stopwords):
-		#figuring out number of occurrences -- FLAT for now
-		#TODO: make it so that closer words carry more significance
 		for targ in pair_set:
 			if stopwords.count(targ)>0 or re.search(word, targ):
 				continue

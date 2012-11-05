@@ -44,13 +44,13 @@ class Synesthesizer():
 		textsize = 14
 
 		font.init()
+		print 'FONT: ' + fontname 
 		self.texter = font.SysFont(fontname, textsize)
 		
 		(letWidth, letHeight) = self.texter.size('a')
 
 		self.iSimp = ImageSimpler()
 		self.preimg = self.iSimp.simplify(image, colors, 25)
-		#self.preimg.save('simpleimg.jpg')
 		self.img = self.preimg.resize((self.preimg.size[0], int(self.preimg.size[1]*(letWidth/letHeight))))
 		pixor = self.img.load()
 
