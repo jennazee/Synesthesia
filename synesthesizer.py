@@ -22,7 +22,7 @@ Execution: Jenna Zeigen (github.com/jennazee)
 
 class Synesthesizer():
 
-	def synesthesize(self, image, colors=['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'white', 'black', 'gray', 'brown']):
+	def synesthesize(self, image, colors, font):
 		"""
 		Purpose: Take an image, replace all the colors with words associated with the colors, saves the image to disk
 		Inputs: Image to be adulterated, colors to be used
@@ -33,7 +33,6 @@ class Synesthesizer():
 		self.associates = {}
 		self.storage = {}
 		for color in colors:
-			print 'Building associates for ' + str(color)
 			worder = CooccurrenceFinder()
 			self.associates[color] = worder.find_relateds(worder.corpus_scraper(color, 20), [color], 15)[color]
 
@@ -43,16 +42,15 @@ class Synesthesizer():
 		textsize = 14
 
 		font.init()
-		self.texter = font.SysFont('corbel', textsize)
+		self.texter = font.SysFont(font, textsize)
 		
 		(letWidth, letHeight) = self.texter.size('a')
 
-		print 'Simplifying the Image'
 		self.iSimp = ImageSimpler()
 		self.preimg = self.iSimp.simplify(image, colors, 25)
-		preimg.save('simpleimg.jpg')
+		#self.preimg.save('simpleimg.jpg')
 		self.img = self.preimg.resize((self.preimg.size[0], int(self.preimg.size[1]*(letWidth/letHeight))))
-		pixor = img.load()
+		pixor = self.img.load()
 
 		newH = self.img.size[1]*letHeight
 		newW = self.img.size[0]*letWidth
@@ -63,34 +61,37 @@ class Synesthesizer():
 		#replace pixel with words. One pixel -> one character.
 		x = 0
 		y = 0
-		print 'Drawing Image'
-		while y < img.size[1]:
+		while y < self.img.size[1]:
 			#what color is the current pixel?
 			pixel = pixor[x,y]
 			#ok, give me the associates
-			wordsleft = associates[webcolors.rgb_to_name(pixel)]
+			wordsleft = self.associates[webcolors.rgb_to_name(pixel)]
 			#get me the next word
 			if len(wordsleft) > 0:
 				word = wordsleft.pop()
 			else:
-				associates[webcolors.rgb_to_name(pixel)] = copy.deepcopy(storage[webcolors.rgb_to_name(pixel)])
-				word = associates[webcolors.rgb_to_name(pixel)].pop()
+				self.associates[webcolors.rgb_to_name(pixel)] = copy.deepcopy(self.storage[webcolors.rgb_to_name(pixel)])
+				word = self.associates[webcolors.rgb_to_name(pixel)].pop()
 			#do I have space left on the line?
-			if len(word)+x <= img.size[0]:
-				drawn = texter.render(word, True, pixel)
-				synpic.blit(drawn, (x*letWidth,y*letHeight))
+			if len(word)+x <= self.img.size[0]:
+				drawn = self.texter.render(word, True, pixel)
+				self.synpic.blit(drawn, (x*letWidth,y*letHeight))
 				x+=(len(word)+1)
-				if x >= img.size[0]:
+				if x >= self.img.size[0]:
 					y+=1
 					x=0
 			else:
-				associates[webcolors.rgb_to_name(pixel)].append(word)
+				self.associates[webcolors.rgb_to_name(pixel)].append(word)
 				y+=1
 				x=0
 
 		name = ''.join([choice(string.ascii_letters + string.digits) for n in range(30)])
-		PyImage.save(synpic, 'creations/' +name + '.jpg')
+		PyImage.save(self.synpic, 'creations/' +name + '.jpg')
 		return 'creations/' +name + '.jpg'
+
+
+def find_fonts():
+	return font.get_fonts()
 
 if __name__ == '__main__':
 	syn = Synesthesizer()

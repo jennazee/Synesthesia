@@ -14,14 +14,14 @@ class ImageSimpler():
 	def simplify(self, imagefile, colors, percentsize):
 		self.image = Image.open(imagefile)
 		if percentsize is not 100:
-			self.scale_by_percent(self.image, percentsize)
+			self.image = self.scale_by_percent(self.image, percentsize)
 
 		self.color_map = self.map_RGB_to_color_word(colors)
 
 		#makes the image more readily mutable and readable by creating a "Pixel Access Object"
-		pixels = self.image.load()
+		self.pixels = self.image.load()
 
-		return self.reduce_to_requested_color_space(pixels, image, self.color_map)
+		return self.reduce_to_requested_color_space(self.pixels, self.image, self.color_map)
 
 
 	def scale_by_percent(self, im, percent):

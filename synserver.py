@@ -2,7 +2,7 @@ import os, json, string, random
 from werkzeug import secure_filename
 from flask import Flask, render_template, jsonify, request, url_for, redirect
 from flaskext.uploads import *
-from synesthesizer import Synesthesizer
+import synesthesizer
 
 app = Flask(__name__)
 
@@ -23,13 +23,16 @@ configure_uploads(app, photos)
 def upload():
 	if 'photo' in request.files:
 		name = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(30)])
-		filename = photos.save(request.files['photo'], app.config['UPLOADED_PHOTOS_DEST'], name+'.')
-		syn = Synesthesizer()
-		return syn.synesthesize(filename, request.form.getlist('color'))
+		filename = photos.save(request.files['photo'], name=name+'.' )
+		syn = synestheizer.Synesthesizer()
+		return syn.synesthesize('uploads/' + filename, request.form.getlist('color'), request.form['font'])
 
 	else:
 		return 'No File Uploaded'
 
+@app.route('/fonts')
+def font():
+	return json.dumps(synesthesizer.find_fonts())
 
 if __name__ == '__main__':
     app.run(debug=True)
