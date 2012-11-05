@@ -47,14 +47,14 @@ class CooccurrenceFinder():
 		return 'corpuses/'+word+'_corpuses.txt'
 
 	#TODO: make this algorithm weighted by distance
-	def find_relateds(self, corpus, words, distance):
+	def find_relateds(self, corpus, word, distance, extra_stops, stdevs):
 		"""
-		Purpose: To divine a list of words associated with each of word in a provided list as determined by a threshold of co-occurrence
+		Purpose: To divine a list of words associated with a provided word as determined by a threshold of co-occurrence
 		Inputs: The corpus to be analyzed, the words to be analyzed for, the max distance that would satisfy a co-occurrence
 		Outputs: Significant co-occurrences
 		"""
 
-		#TODO: make it so that a newline wipes out the possibility of a 
+		#TODO: make it so that a newline wipes
 		file = open(corpus, 'r')
 		text = file.read().lower()
 		file.close()
@@ -65,48 +65,57 @@ class CooccurrenceFinder():
 		stopwords = dump.split()
 
 		#since this is being used for colors for now, I don't want, for example, 'blue' to be in 'red's' associate list
-		stopwords.extend(['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'white', 'black', 'color', 'colors', 'colour', 'colours'])
+		stopwords.extend(extra_stops)
 
-		pairs = {}
-		counts = {}
-		sigCos = {}
+		self.counts = {}
 
-		#building and executing the regex query, finding words that are a certain distance from the the target word
-		for word in words:
-			term = [word+'s?', r' (\w+)']
-			pairs[word] = {}
-			counts[word]={}
-			for i in range(distance):
-				if i is 0:
-					pairs[word][i] = re.findall(''.join(term), text)
-				else:
-					term.insert(1, r' \w+')
-					pairs[word][i] = re.findall(''.join(term), text)
+		pairs = self.find_close_words(distance, text, word)
 
-				#figuring out number of occurrences -- FLAT for now
-				#TODO: make it so that closer words carry more significance
-				for targ in pairs[word][i]:
-					if stopwords.count(targ)>0 or re.search(word, targ):
-						continue
-					elif targ in counts[word]:
-						counts[word][targ]+=1
-					else:
-						counts[word][targ]=1
+		for i in range(distance):
+			self.tally_occurrences(word, pairs[i], stopwords)
 
-		#see if any of the words occur >1.96 SDs from the mean, or outside of a 95% tolerance interval
-		for word in words:
-			sigCos[word]=[]
-			allCounts = []
-			for coll in counts[word].keys():
-				allCounts.append(counts[word][coll])
-			av = numpy.average(allCounts)
-			std = numpy.std(allCounts)
-			for coll in counts[word].keys():
-				if (counts[word][coll]-av)/std > 1.96:
-					sigCos[word].append(coll)
+		print self.find_significant_cooccurrences(self.counts, stdevs)
+
+
+	#building and executing the regex query, finding words that are a certain distance after a target word
+	#TODO: add before word functionality
+	def find_close_words(self, dist, text, word):
+		term = [word+'s?', r' (\w+)']
+		temp_pairs = {}
+		for i in range(dist):
+			if i is 0:
+				temp_pairs[i] = re.findall(''.join(term), text)
+			else:
+				term.insert(1, r' \w+')
+				temp_pairs[i] = re.findall(''.join(term), text)
+
+		return temp_pairs
+
+
+	def tally_occurrences(self, word, pair_set, stopwords):
+		#figuring out number of occurrences -- FLAT for now
+		#TODO: make it so that closer words carry more significance
+		for targ in pair_set:
+			if stopwords.count(targ)>0 or re.search(word, targ):
+				continue
+			elif targ in self.counts:
+				self.counts[targ]+=1
+			else:
+				self.counts[targ]=1
+
+	def find_significant_cooccurrences(self, counts, SDs):
+		allCounts = []
+		sigCos = []
+		for coll in counts.keys():
+			allCounts.append(counts[coll])
+		av = numpy.average(allCounts)
+		std = numpy.std(allCounts)
+		for coll in counts.keys():
+			if (counts[coll]-av)/std > SDs:
+				sigCos.append(coll)
 
 		return sigCos
 
 if __name__ == '__main__':
 	cf = CooccurrenceFinder()
-	cf.find_relateds(cf.corpus_scraper('cat', 5),['cat'], 50)	
+	cf.find_relateds(cf.corpus_scraper('dog', 5),'dog', 50, ['dog'], 1.96)	

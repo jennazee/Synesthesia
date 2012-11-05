@@ -22,19 +22,21 @@ Execution: Jenna Zeigen (github.com/jennazee)
 
 class Synesthesizer():
 
-	def synesthesize(self, image, colors, font):
+	def synesthesize(self, image, colors, fontname):
 		"""
 		Purpose: Take an image, replace all the colors with words associated with the colors, saves the image to disk
 		Inputs: Image to be adulterated, colors to be used
 		Outputs: Nothing really -- saves image to disk
 		"""
 
+		self.color_stops = ['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'white', 'black', 'color', 'colors', 'colour', 'colours']
+
 		#take the list of requested colors and get a "word palatte" for each word
 		self.associates = {}
 		self.storage = {}
 		for color in colors:
 			worder = CooccurrenceFinder()
-			self.associates[color] = worder.find_relateds(worder.corpus_scraper(color, 20), [color], 15)[color]
+			self.associates[color] = worder.find_relateds(worder.corpus_scraper(color, 20), color, 15, self.color_stops, 1.96)
 
 		self.storage = copy.deepcopy(self.associates)
 
@@ -42,7 +44,7 @@ class Synesthesizer():
 		textsize = 14
 
 		font.init()
-		self.texter = font.SysFont(font, textsize)
+		self.texter = font.SysFont(fontname, textsize)
 		
 		(letWidth, letHeight) = self.texter.size('a')
 
@@ -95,4 +97,4 @@ def find_fonts():
 
 if __name__ == '__main__':
 	syn = Synesthesizer()
-	syn.synesthesize('rothko3.jpg', colors=['blue', 'black', 'orange'])
+	syn.synesthesize('rothko3.jpg', ['blue', 'black', 'orange'], 'corbel')
