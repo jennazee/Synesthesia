@@ -11,6 +11,7 @@ from random import choice
 from pygame import font, Surface
 from pygame import image as PyImage
 import sys
+import os
 
 
 """
@@ -26,7 +27,7 @@ class Synesthesizer():
 		"""
 		Purpose: Take an image, replace all the colors with words associated with the colors, saves the image to disk
 		Inputs: Image to be adulterated, colors to be used
-		Outputs: Nothing really -- saves image to disk
+		Outputs: Filename of created image
 		"""
 
 		self.color_stops = ['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'white', 'black', 'color', 'colors', 'colour', 'colours']
@@ -40,11 +41,9 @@ class Synesthesizer():
 
 		self.storage = copy.deepcopy(self.associates)
 
-		#to be the word representation of the image
 		textsize = 14
 
 		font.init()
-		print 'FONT: ' + fontname 
 		self.texter = font.SysFont(fontname, textsize)
 		
 		(letWidth, letHeight) = self.texter.size('a')
@@ -89,6 +88,9 @@ class Synesthesizer():
 
 		name = ''.join([choice(string.ascii_letters + string.digits) for n in range(30)])
 		PyImage.save(self.synpic, 'creations/' +name + '.jpg')
+
+		#os.remove(image)
+
 		return 'creations/' +name + '.jpg'
 
 

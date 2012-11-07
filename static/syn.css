@@ -2,7 +2,131 @@ h1, h2, blockquote {
 	text-align: center;
 }
 
+h1, h2 {
+	font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 100;
+	margin-bottom: 0;
+}
+
+h1 {
+	font-size: 4.5em;
+	margin-bottom: 0;
+}
+
+h2 {
+	font-size: 2.5em;
+	margin-top: 0;
+}
+
+html {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 200;
+}
+
 blockquote{
-	width: 300px;
+	width: 600px;
 	margin: 20px auto;
+}
+
+ul {
+	list-style: none;
+	width: 160px;
+	clear: both;
+	text-align: left;
+	margin: 5px auto 20px;
+}
+
+#appbox {
+	width: 600px;
+	margin: 20px auto;
+	text-align: center;
+}
+
+#appbox div {
+	clear: both;
+	margin-top: 30px
+}
+
+.imshow {
+	-moz-box-shadow: inset 0 0 5px #999;
+	-webkit-box-shadow: inset 0 0 5px #999;
+	box-shadow: inset 0 0 5px #999;
+	padding: 15px;
+	width: 250px;
+	margin: 10px auto;
+	border-radius: 5px;
+}
+
+.prev-im {
+	width: 250px;
+}
+
+#pic-up{
+	width: 170px;
+}
+
+#pp-close{
+	float:right;
+	border-radius: 50px;
+	background-color: #ddd;
+	padding: 2px;
+}
+
+#pp-close:hover{
+	background-color: #bbb;
+	cursor: pointer;
+}
+
+footer {
+	text-align: center;
+}
+
+#colors {
+	height: 200px;
+}
+
+footer p {
+	margin: 0;
+	padding: 0;
+}
+
+#send {
+	margin-top: 30px;
+	font-size: 1.5em;
+}
+
+li {
+	padding: 5px;
+	float: left;
+	width: 70px;
+}
+
+#font {
+	clear: both;
+}
+
+#e {
+	color: red;
+}
+
+footer {
+	padding-top: 40px;
+	padding-bottom: 20px;
+}
+
+input:hover{
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}
+
+#p-policy {
+	position: fixed;
+	top: 40%;
+	left: 25%;
+	width: 800px;
+	z-index: 12;
+	background-color: white;
 }

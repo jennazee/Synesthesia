@@ -1,6 +1,6 @@
 import os, json, string, random
 from werkzeug import secure_filename
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file, make_response
 from flaskext.uploads import *
 import synesthesizer
 
@@ -29,6 +29,20 @@ def upload():
 
 	else:
 		return 'No File Uploaded'
+
+@app.route('/creations/<filename>')
+def get_pic(filename):
+	return send_file('creations/'+filename, mimetype='image/gif')
+
+@app.route('/download/<filename>')
+def download(filename):
+	response = make_response()
+	response.headers['Cache-Control'] = 'no-cache'
+	response.headers['Content-Type'] = 'image/jpg'
+	response.headers['Content-disposition'] = 'attachment'
+	response.headers['filename']=filename
+	return response
+
 
 @app.route('/fonts')
 def font():
