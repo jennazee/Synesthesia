@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os, json, string, random
 from werkzeug import secure_filename
 from flask import Flask, render_template, request, send_file, make_response
@@ -41,6 +43,9 @@ def download(filename):
 	response.headers['Content-Type'] = 'image/jpg'
 	response.headers['Content-disposition'] = 'attachment'
 	response.headers['filename']=filename
+	pic = open('creations/'+filename, 'r')
+	response.data = pic.read()
+	pic.close()
 	return response
 
 
