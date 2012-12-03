@@ -3,9 +3,8 @@ Takes in an image and replace the colors with words semantically related to the 
 
 So, if there's a red patch in your image, in that area in the resulting image, you might find the words "cherry", "communism", "anger", and "balloon"
 
-####Concept: Natan Last
-
-####Execution: Jenna Zeigen (me!)
+Concept: Natan Last
+Execution: Jenna Zeigen (me!)
 
 ##Components:
 1. cooccurrence.py -- This is the module that makes the lists of words are associated with the colors.
