@@ -12,16 +12,19 @@ So, if there's a red patch in your image, in that area in the resulting image, y
 2. imagesimpler.py -- This module reduces the color space so that the words can be properly associated with the colors
 3. synesthesizer.py -- This module takes the words and image and maps them, creating the final piece
 4. synserver.py -- Flask-powered; Makes synesthesizer a web app with a pretty GUI with the help of syn.js and syn.css
+
 --------
 ##GUI
-![Alt text](../readmeimages/intial.png "Initial Screen")
+![Initial Screen](http://www.jennazeigen.com/Github-Readme-Imgs/initial.png "Initial Screen")
 
 While synthesizer.py also works as a command line tool, it also has a web app interface powered by Flask. You upload your image, which will them be previewed, and then choose all the conditions to modify the parameters.
-![Alt text](../readmeimages/upload.png "Preview of uploaded image")
+
+![GUI shown with preview of uploaded image](http://www.jennazeigen.com/Github-Readme-Imgs/upload.png "Preview of uploaded image")
 
 
 When you submit your image and choices, the result will appear and you can then click on the preview to download the image.
-![Alt text](../readmeimages/output.png "Showing the resulting image")
+
+![GUI shown with resulting image](http://www.jennazeigen.com/Github-Readme-Imgs/output.png "Showing the resulting image")
 
 --------
 ##API
@@ -88,7 +91,7 @@ TODO: Get words that distance before the target as well
 -------------------
 
 ###synesthesizer.py
-* The main attraction: Takes the image and makes its colors words. Words at the command line as well as through the web GUI powered by synserver.py
+* The main attraction: Takes the image and makes its colors words. Works at the command line as well as through the web GUI powered by synserver.py
 * Dependencies: pillow, webcolors, pygame, cooccurrence.py, and imagesimpler.py
 
 ####`Synesthesizer`:
