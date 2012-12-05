@@ -76,21 +76,26 @@ class CooccurrenceFinder():
         return self.find_significant_cooccurrences(self.counts, stdevs)
 
 
-    #TODO: add before word functionality
+    #I realize that this can have a much better runtime by running a single regex for the entire duration. I like having the distances on hand. See the comment for 'tally_occurrences()'
     def find_close_words(self, dist, text, word):
         """
         Purpose: Finds all the words in a corpus within a specified distance of a target word
         Inputs: Desired distance, text corpus, target word
         Outputs: Dictionary of distances to words that distance after the target
         """
-        term = [word+'s?', r' (\w+)']
+        term = [word+'s?', r'(\w+)']
         temp_pairs = {}
         for i in range(dist):
             if i is 0:
-                temp_pairs[i] = re.findall(''.join(term), text)
+                temp_pairs[i] = re.findall(' '.join(term), text)
+                term.reverse()
+                temp_pairs[i] = re.findall(' '.join(term), text)
             else:
-                term.insert(1, r' \w+')
-                temp_pairs[i] = re.findall(''.join(term), text)
+                #works regardless of term orientation
+                term.insert(1, r'\w+')
+                temp_pairs[i] = re.findall(' '.join(term), text)
+                term.reverse()
+                temp_pairs[i] = re.findall(' '.join(term), text)
 
         return temp_pairs
 
@@ -126,7 +131,3 @@ class CooccurrenceFinder():
                 sigCos.append(coll)
 
         return sigCos
-
-if __name__ == '__main__':
-    cf = CooccurrenceFinder()
-    cf.find_relateds(cf.corpus_scraper('dog', 5),'dog', 50, ['dog'], 1.96)  

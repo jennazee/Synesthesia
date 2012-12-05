@@ -47,12 +47,10 @@ When you submit your image and choices, the result will appear and you can then 
 #####`find_close_words(self, dist, text, word)`
 * Purpose: Finds all the words in a corpus within a specified distance of a target word
 * Inputs: Desired distance, text corpus, target word
-* Outputs: Dictionary of distances to words that distance after the target
-
-TODO: Get words that distance before the target as well
+* Outputs: Dictionary of distances to words that distance from the target
 
 #####`tally_occurrences(self, word, pair_set, stopwords)`
-* Purpose: Create a frequency distribution for the area after the target word, but not including stop words or derivatives of the target
+* Purpose: Create a frequency distribution for the area surrounding the target word, but not including stop words or derivatives of the target
 * Inputs: Target word, dictionary of distances to words, stopwords
 * Outputs: Nothing explicitly
 
