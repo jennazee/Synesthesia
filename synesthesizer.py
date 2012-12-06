@@ -5,7 +5,7 @@ import copy
 import string
 import sys
 import os
-from random import choice, shuffle
+from random import choice, shuffle, randint
 from collections import defaultdict, deque
 import pickle
 
@@ -56,9 +56,6 @@ class Synesthesizer():
                 shuffle(col_combos[k])
 
             self.all_combos[key] = col_combos
-
-
-
 
         f = open('combos', 'w')
         pickle.dump(self.all_combos, f)
@@ -111,7 +108,8 @@ class Synesthesizer():
                         return "!"*int(space)
 
             else:
-                return check_fit(floor(space/2), color) + check_fit(ceil(space/2), color)
+                shift = randint(0,4)
+                return check_fit(floor(space/2)-shift, color) + check_fit(ceil(space/2)+shift, color)
 
 
         def get_space(x, y, color):
