@@ -1,10 +1,8 @@
 #!/usr/bin/python
 from __future__ import division
 from math import floor, ceil
-import copy
 import string
 import sys
-import os
 from random import choice, shuffle, randint
 from collections import defaultdict, deque
 import pickle
@@ -60,8 +58,12 @@ class Synesthesizer():
         f = open('combos', 'w')
         pickle.dump(self.all_combos, f)
         f.close()
+
+    def reconstitute(self):
+        f = open('combos', 'r')
+        self.all_combos = pickle.load(f)
+        f.close()
         
-    
     def synesthesize(self, image, colors, fontname):
         """
         Purpose: Take an image, replace all the colors with words associated with the colors, saves the image to disk
@@ -86,10 +88,6 @@ class Synesthesizer():
         self.synpic = Surface((newW, newH))
         self.synpic.fill((255,255,255))
 
-        f = open('combos', 'r')
-        self.all_combos = pickle.load(f)
-        f.close()
-
         #replace pixels with words. One pixel -> one character. Oh hai, linear packing approximation...
         x = 0
         y = 0
@@ -112,7 +110,7 @@ class Synesthesizer():
                 return check_fit(floor(space/2)-shift, color) + check_fit(ceil(space/2)+shift, color)
 
 
-        def get_space(x, y, color):
+        def get_space(x,y, color):
             x1 = x
             while x<self.img.size[0] and webcolors.rgb_to_name(pixor[x,y]) is color:
                 x+=1
@@ -144,5 +142,5 @@ def find_fonts():
 
 if __name__ == '__main__':
     syn = Synesthesizer()
-    syn.combinatorics()
-    #syn.synesthesize('rothko3.jpg', ['blue', 'black', 'orange'], 'corbel')
+    syn.reconstitute()
+    syn.synesthesize('rothko3.jpg', ['blue', 'green', 'black', 'orange'], 'couriernew')

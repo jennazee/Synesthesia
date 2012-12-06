@@ -13,6 +13,9 @@ app = Flask(__name__)
 
 app.config['UPLOADED_PHOTOS_DEST'] = 'uploads'
 
+syn = synesthesizer.Synesthesizer()
+syn.reconstitute()
+
 @app.route('/', methods=['GET', 'POST'])
 def start():
 	return render_template('index.html')
@@ -26,7 +29,6 @@ def upload():
 	if 'photo' in request.files:
 		name = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(30)])
 		filename = photos.save(request.files['photo'], name=name+'.' )
-		syn = synesthesizer.Synesthesizer()
 		return syn.synesthesize('uploads/' + filename, request.form.getlist('color'), request.form['font'])
 
 	else:

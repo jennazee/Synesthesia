@@ -1,11 +1,10 @@
 #!/usr/bin/python
 import re
 import string
-import json
 import urllib2
 
 from bs4 import BeautifulSoup
-import numpy
+from numpy import average, std
 
 
 class CooccurrenceFinder():
@@ -124,8 +123,8 @@ class CooccurrenceFinder():
         sigCos = []
         for coll in counts.keys():
             allCounts.append(counts[coll])
-        av = numpy.average(allCounts)
-        std = numpy.std(allCounts)
+        av = average(allCounts)
+        std = std(allCounts)
         for coll in counts.keys():
             if (counts[coll]-av)/std > SDs:
                 sigCos.append(coll)

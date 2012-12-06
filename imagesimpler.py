@@ -1,7 +1,6 @@
 #!/usr/bin/python
 import Image
 import webcolors
-import math
 
 
 class ImageSimpler():
@@ -50,7 +49,6 @@ class ImageSimpler():
             rgbsToColors[webcolors.name_to_rgb(color)] = color
         return rgbsToColors
 
-        
     def reduce_to_requested_color_space(self, pix_obj, im, color_mapping):
         """
         Purpose: Creates an image in which colors are changed to be whatever they are closest to from a list of colors
@@ -65,7 +63,7 @@ class ImageSimpler():
                 mindist = float('Inf')
                 #find which rgb triplet is the closest through Euclidean distance of their vectors
                 for rgb in color_mapping:
-                    dist = math.sqrt((rgb[0]-pix[0])*(rgb[0]-pix[0])+(rgb[1]-pix[1])*(rgb[1]-pix[1])+(rgb[2]-pix[2])*(rgb[2]-pix[2]))
+                    dist = (rgb[0]-pix[0])*(rgb[0]-pix[0])+(rgb[1]-pix[1])*(rgb[1]-pix[1])+(rgb[2]-pix[2])*(rgb[2]-pix[2])
                     if dist < mindist:
                         mindist = dist
                         closest = rgb
