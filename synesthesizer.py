@@ -25,6 +25,11 @@ Execution: Jenna Zeigen (github.com/jennazee)
 class Synesthesizer():
 
     def combinatorics(self):
+        """
+        Purpose: Creates a file containing a pickled dictionary, keyed by color words, of strings containing associates that are up to 25 characters long
+        Inputs: None
+        Outputs: Nothing explicit
+        """
         self.color_stops = ['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'white', 'black', 'color', 'grey', 'gray' 'colors', 'colour', 'colours', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
         self.colors = ['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'black', 'gray']
         self.associates = {}
@@ -32,12 +37,10 @@ class Synesthesizer():
         self.max_length = 25
 
         for color in self.colors:
-            print 'doing co-occurrence'
             worder = CooccurrenceFinder()
             self.associates[color] = worder.find_relateds(worder.corpus_scraper(color, 20), color, 15, self.color_stops, 1.96)
 
         for key in self.associates:
-            print key
             col_combos = defaultdict(deque)
             for el in self.associates[key]:
                 temp = defaultdict(list)
@@ -93,7 +96,6 @@ class Synesthesizer():
         y = 0
 
         def check_fit(space, color):
-            #TODO: variablize Max_length vs 25
             if space <= 25:
                 if self.all_combos[color][space]:
                     word = self.all_combos[color][space].pop()

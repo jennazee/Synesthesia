@@ -22,7 +22,7 @@ While synthesizer.py also works as a command line tool, it also has a web app in
 
 When you submit your image and choices, the result will appear and you can then click on the preview to download the image.
 
-![GUI shown with resulting image](http://www.jennazeigen.com/Github-Readme-Imgs/output.png "Showing the resulting image")
+![GUI shown with resulting image](http://www.jennazeigen.com/Github-Readme-Imgs/output_better.png "Showing the resulting image")
 
 --------
 ##API
@@ -91,8 +91,19 @@ When you submit your image and choices, the result will appear and you can then 
 * Dependencies: pillow, webcolors, pygame, cooccurrence.py, and imagesimpler.py
 
 ####`Synesthesizer`:
+#####`combinatorics(self)`
+* Purpose: Creates a file containing a pickled dictionary, keyed by color words, of strings containing associates that are up to 25 characters long
+* Inputs: None
+* Outputs: Nothing explicit
+
+#####`reconstitute(self)`
+* Purpose: Unpickles the dictionary created by `combinatorics()` and saves it as an attribue of the `Synesthesizer`
+* Inputs: None
+* Outputs: Nothing explicit
 
 #####`synesthesize(self, image, colors, fontname)`
 * Purpose: Take an image, replace all the colors with words associated with the colors, saves the image to disk
 * Inputs: Image to be adulterated, colors to be used
 * Outputs: Filename of created image
+
+* Contains three helper methods: `check_fit()`, `get_space()`, and `paint_picture()` 
