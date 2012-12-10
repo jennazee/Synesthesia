@@ -140,7 +140,8 @@ class Synesthesizer():
         return 'creations/' +name + '.jpg'
 
 def find_fonts():
-    return sorted(font.get_fonts())
+    monospaced = ["bitstreamverasansmono", "consolas", "luximono", "lucidaconsole", "andalemono", "couriernew", 'inconsolata', 'courier', 'monaco']
+    return sorted([f for f in font.get_fonts() if f in monospaced])
 
 if __name__ == '__main__':
     syn = Synesthesizer()

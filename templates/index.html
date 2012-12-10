@@ -43,6 +43,8 @@
 				<input id='send' type="submit" value="Submit">
 			</form>
 
+			<div id='swirl' class='hidden'><img src="{{ url_for('static', filename='loading.gif')}}" /></div>
+
 			<div id='creation-wrapper' class='hidden'>
 				<p>Click the image to download your creation.</p>
 				<div id='art-prev-box' class='imshow'>
@@ -53,16 +55,16 @@
 		</div>
 
 		<div id='p-policy' class='hidden imshow'>
-			<div id='pp-close'>x</div>
+			<div id='pp-close'> x </div>
 			<h3>Privacy Policy</h3>
-			<p>When you upload a file, we temporarily store it and a derivative, simplified file on our server. We also will store a copy of the word image that we make for you so that you can follow a link and come back and get it time and time again, or share it with friends in the future</p>
+			<p>When you upload a file, we temporarily store it on our server. We also will store a copy of the word image that we make for you so that you can follow a link and come back and get it time and time again, or share it with friends in the future.</p>
 		</div>
 
 	</body>
 
 	<footer>
 		<p>Concept: Natan Last • Execution: Jenna Zeigen </p>
-		<p><span id='p-pol'>Privacy Policy</span> •  Creative Commons License</p>
+		<p><span id='p-pol'>Privacy Policy</span></p>
 	</footer>
 
 </html>

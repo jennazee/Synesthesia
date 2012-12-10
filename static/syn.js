@@ -25,11 +25,21 @@ $('document').ready(function(){
  	});
 
  	$('#parameterbox').submit(function() {
+        if ($('#pic-up').val() === '') {
+            alert('You must upload an image!')
+            return false
+        }
+        if ($("input:checked").length === 0) {
+            alert('You choose some colors for your image!')
+            return false
+        }
  		var fd = new FormData();
     	fd.append('photo', $('#pic-up')[0].files[0]);
     	$.each($('#parameterbox').serializeArray(), function(i, v){
     		fd.append(v.name, v.value)
     	})
+        $('#swirl').removeClass('hidden')
+        $('#creation-wrapper').addClass('hidden');
 	    $.ajax({
 	       	url: "/upload",
 	       	type: "POST",
@@ -37,6 +47,7 @@ $('document').ready(function(){
 	  	    processData: false,
 	     	contentType: false,
 	    	success: function(data) {
+                $('#swirl').addClass('hidden')
 	       		$('#word-pic-prev').attr('src', data)
 	          	$('#creation-wrapper').removeClass('hidden');
 	          	set_clickable()
