@@ -5,6 +5,8 @@ So, if there's a red patch in your image, in that area in the resulting image, y
 
 Concept: Natan Last, Execution: Jenna Zeigen (me!)
 
+I've blogged about this project and more how each of the methods work at <http://linkguistics.blogspot.com/2012/12/project-synesthesia.html>
+
 ##Components:
 1. cooccurrence.py -- This is the module that makes the lists of words are associated with the colors.
 2. imagesimpler.py -- This module reduces the color space so that the words can be properly associated with the colors
@@ -90,7 +92,7 @@ When you submit your image and choices, the result will appear and you can then 
 * The main attraction: Takes the image and makes its colors words. Works at the command line as well as through the web GUI powered by synserver.py
 * Dependencies: pillow, webcolors, pygame, cooccurrence.py, and imagesimpler.py
 
-####`Synesthesizer`:
+####`Synesthesizer()`:
 #####`combinatorics(self)`
 * Purpose: Creates a file containing a pickled dictionary, keyed by color words, of strings containing associates that are up to 25 characters long
 * Inputs: None
