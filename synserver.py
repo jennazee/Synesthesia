@@ -14,7 +14,11 @@ app = Flask(__name__)
 app.config['UPLOADED_PHOTOS_DEST'] = 'uploads'
 
 syn = synesthesizer.Synesthesizer()
-syn.reconstitute()
+try:
+	syn.reconstitute()
+except IOError:
+	syn.combinatorics()
+	syn.reconstitute()
 
 @app.route('/', methods=['GET', 'POST'])
 def start():
