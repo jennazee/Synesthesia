@@ -22,6 +22,7 @@ class CooccurrenceFinder():
             genCorpus = True
 
         if genCorpus or redo:
+            print 'Generating corpus for ' + word
             req = urllib2.Request(url='http://en.wikipedia.org/w/index.php?title=Special:Search&search='+str(word)+'&fulltext=Search&profile=advanced&redirs=1', headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15'})
             site = urllib2.urlopen(req)
             results = BeautifulSoup(site)
@@ -124,9 +125,9 @@ class CooccurrenceFinder():
         for coll in counts.keys():
             allCounts.append(counts[coll])
         av = average(allCounts)
-        std = std(allCounts)
+        stdv = std(allCounts)
         for coll in counts.keys():
-            if (counts[coll]-av)/std > SDs:
+            if (counts[coll]-av)/stdv > SDs:
                 sigCos.append(coll)
 
         return sigCos
