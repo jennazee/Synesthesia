@@ -1,6 +1,6 @@
 $('document').ready(function(){
 
-	var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'black', 'gray', 'brown'];
+	var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'black', 'grey', 'brown'];
 
 	$.each(colors, function(i, v) {
 		$('#color-list').append('<li><input type="checkbox" name="color" value="'+v+'">'+v+'</input></li>');

@@ -31,7 +31,7 @@ class Synesthesizer():
         Outputs: Nothing explicit
         """
         self.color_stops = ['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'white', 'black', 'color', 'grey', 'gray' 'colors', 'colour', 'colours', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-        self.colors = ['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'black', 'gray']
+        self.colors = ['red', 'orange', 'yellow', 'green', 'brown', 'blue', 'purple', 'pink', 'black', 'grey']
         self.associates = {}
         self.all_combos = {}
         self.max_length = 25
