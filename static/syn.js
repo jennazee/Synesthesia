@@ -15,9 +15,9 @@ $('document').ready(function(){
 	//adapted from http://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
  	$('#pic-up').change(function(){
  		if (this.files && this.files[0]) {
-            console.log(this.files[0].type)
             if (!(this.files[0].type === "image/jpeg" || this.files[0].type === "image/jpg" || this.files[0].type === "image/png")) {
-                alert("That type of image isn't supported. Please try a different image.")
+                $('#prev-box').addClass('hidden');
+                alert("That type of file isn't supported. Please try a different image.")
             }
             else {
                 var reader = new FileReader();

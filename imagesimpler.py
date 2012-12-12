@@ -23,9 +23,7 @@ class ImageSimpler():
         
         if e.lower() not in ['.jpg', '.jpeg', '.png']:
             raise Exception('Image type not supported')
-        print e.lower() == '.png', e.lower(), '.png'
         if e.lower() == '.png':
-            print 'image converted'
             Image.open(imagefile).save(n + '.jpg')
         self.image = Image.open(n + '.jpg')
         if percentsize is not 100:
