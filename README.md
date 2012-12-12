@@ -67,7 +67,7 @@ When you submit your image and choices, the result will appear and you can then 
 
 ####`ImageSimpler()`:
 #####`simplify(self, imagefile, colors, percentsize)`
-* Purpose: To take an image, scale it as specified, and "round" all colors to one of a specified list of colors and then return the mutated image
+* Purpose: To take an image, scale it as specified, and "round" all colors to one of a specified list of colors and then return the mutated image. Only takes jpeg and png. Otherwise, throws an Exception.
 * Inputs: Image to be manipulated, colors to be "rounded to", scaled size of the image
 * Outputs: The mutated image
 
