@@ -1,6 +1,9 @@
 #!/usr/bin/python
+from os import path
+
 import Image
 import webcolors
+
 
 
 class ImageSimpler():
@@ -16,7 +19,15 @@ class ImageSimpler():
         Inputs: Image to be manipulated, colors to be "rounded to", scaled size of the image
         Outputs: The mutated image
         """
-        self.image = Image.open(imagefile)
+        n, e = path.splitext(imagefile)
+        
+        if e.lower() not in ['.jpg', '.jpeg', '.png']:
+            raise Exception('Image type not supported')
+        print e.lower() == '.png', e.lower(), '.png'
+        if e.lower() == '.png':
+            print 'image converted'
+            Image.open(imagefile).save(n + '.jpg')
+        self.image = Image.open(n + '.jpg')
         if percentsize is not 100:
             self.image = self.scale_by_percent(self.image, percentsize)
 
@@ -55,6 +66,7 @@ class ImageSimpler():
         Inputs: PIL pixel object, image, dictionary of rgbs to css colors
         Outputs: Color-simplified image
         """
+        print pix_obj
         for x in range(im.size[0]):
             for y in range(im.size[1]):
                 pix = pix_obj[x,y]

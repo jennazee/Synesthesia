@@ -40,7 +40,7 @@ def upload():
 
 @app.route('/creations/<filename>')
 def get_pic(filename):
-	return send_file('creations/'+filename, mimetype='image/gif')
+	return send_file('creations/'+filename, mimetype='image/jpg')
 
 @app.route('/download/<filename>')
 def download(filename):
