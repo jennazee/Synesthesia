@@ -36,7 +36,7 @@ $('document').ready(function(){
             return false
         }
         if ($("input:checked").length === 0) {
-            alert('You choose some colors for your image!')
+            alert('You must choose some colors for your image!')
             return false
         }
  		var fd = new FormData();
@@ -56,8 +56,13 @@ $('document').ready(function(){
                 $('#swirl').addClass('hidden')
 	       		$('#word-pic-prev').attr('src', data)
 	          	$('#creation-wrapper').removeClass('hidden');
-	          	set_clickable()
-	       	}
+	          	set_clickable();
+	       	},
+            error: function(req, status, error){
+                $('#swirl').addClass('hidden')
+                $('#creation-wrapper').addClass('hidden');
+                alert('Something went wrong! Did you upload a valid image type (jpg/png)? If so, we are terribly sorry.')
+            }
 	    });
         return false;
     });
