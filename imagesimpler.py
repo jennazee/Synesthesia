@@ -4,8 +4,6 @@ from os import path
 import Image
 import webcolors
 
-
-
 class ImageSimpler():
     """
     Purpose: To take an image and "round" all colors to one of a specified list of colors and then return the mutated image
@@ -43,8 +41,8 @@ class ImageSimpler():
         Inputs: Image, desired percent size
         Outputs: Scaled image
         """
-        newx = int(im.size[0]*(percent/100.00))
-        newy = int(im.size[1]*(percent/100.00))
+        newx = int(im.size[0] * (percent/100.00))
+        newy = int(im.size[1] * (percent/100.00))
         return im.resize((newx, newy))
 
     def map_RGB_to_color_word(self, colors):
@@ -73,7 +71,7 @@ class ImageSimpler():
                 mindist = float('Inf')
                 #find which rgb triplet is the closest through Euclidean distance of their vectors
                 for rgb in color_mapping:
-                    dist = (rgb[0]-pix[0])*(rgb[0]-pix[0])+(rgb[1]-pix[1])*(rgb[1]-pix[1])+(rgb[2]-pix[2])*(rgb[2]-pix[2])
+                    dist = (rgb[0] - pix[0])*(rgb[0]-pix[0]) + (rgb[1]-pix[1])*(rgb[1]-pix[1]) + (rgb[2]-pix[2])*(rgb[2]-pix[2])
                     if dist < mindist:
                         mindist = dist
                         closest = rgb

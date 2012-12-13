@@ -17,33 +17,35 @@ class CooccurrenceFinder():
         """
         genCorpus = False
         try:
-            open('corpuses/'+word+'_corpuses.txt')
+            open('corpuses/' + word + '_corpuses.txt')
         except IOError:
             genCorpus = True
 
+        headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15'}
+
         if genCorpus or redo:
             print 'Generating corpus for ' + word
-            req = urllib2.Request(url='http://en.wikipedia.org/w/index.php?title=Special:Search&search='+str(word)+'&fulltext=Search&profile=advanced&redirs=1', headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15'})
+            req = urllib2.Request(url = 'http://en.wikipedia.org/w/index.php?title=Special:Search&search=' + str(word) + '&fulltext=Search&profile=advanced&redirs=1', headers = headers)
             site = urllib2.urlopen(req)
             results = BeautifulSoup(site)
             site.close()
 
             anchors = []
             
-            for link in results.find('ul', {'class':'mw-search-results'}).find_all('a')[0:numdocs]:
+            for link in results.find('ul', {'class':'mw-search-results'}).find_all('a')[0 : numdocs]:
                 anchors.append(link.get('href'))
 
-            output = open('corpuses/'+word+'_corpuses.txt', 'w')
+            output = open('corpuses/' + word + '_corpuses.txt', 'w')
             for anchor in anchors:
-                req = urllib2.Request(url='http://en.wikipedia.org'+str(anchor), headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML, like Gecko) Chrome/24.0.1295.0 Safari/537.15'})
+                req = urllib2.Request(url = 'http://en.wikipedia.org' + str(anchor), headers = headers)
                 site = urllib2.urlopen(req)
                 page = BeautifulSoup(site)
                 site.close()
-                output.write(page.find('div', {'class':'mw-body'}).get_text().encode('utf8')+'\n\n\n')
+                output.write(page.find('div', {'class':'mw-body'}).get_text().encode('utf8') + '\n\n\n')
 
             output.close()
 
-        return 'corpuses/'+word+'_corpuses.txt'
+        return 'corpuses/' + word + '_corpuses.txt'
 
     #TODO: make this algorithm weighted by distance
     def find_relateds(self, corpus, word, distance, extra_stops, stdevs):
@@ -107,12 +109,12 @@ class CooccurrenceFinder():
         Outputs: Nothing explicitly
         """
         for targ in pair_set:
-            if stopwords.count(targ)>0 or re.search(word, targ):
+            if stopwords.count(targ) > 0 or re.search(word, targ):
                 continue
             elif targ in self.counts:
-                self.counts[targ]+=1
+                self.counts[targ] += 1
             else:
-                self.counts[targ]=1
+                self.counts[targ] = 1
 
     def find_significant_cooccurrences(self, counts, SDs):
         """
@@ -127,7 +129,7 @@ class CooccurrenceFinder():
         av = average(allCounts)
         stdv = std(allCounts)
         for coll in counts.keys():
-            if (counts[coll]-av)/stdv > SDs:
+            if (counts[coll] - av)/stdv > SDs:
                 sigCos.append(coll)
 
         return sigCos

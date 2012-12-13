@@ -82,11 +82,11 @@ class Synesthesizer():
 
         self.iSimp = ImageSimpler()
         self.preimg = self.iSimp.simplify(image, colors, 25)
-        self.img = self.preimg.resize((self.preimg.size[0], int(self.preimg.size[1]*(letWidth/letHeight))))
+        self.img = self.preimg.resize((self.preimg.size[0], int(self.preimg.size[1] * (letWidth/letHeight))))
         pixor = self.img.load()
 
-        newH = self.img.size[1]*letHeight
-        newW = self.img.size[0]*letWidth
+        newH = self.img.size[1] * letHeight
+        newW = self.img.size[0] * letWidth
 
         self.synpic = Surface((newW, newH))
         self.synpic.fill((255,255,255))
@@ -102,21 +102,21 @@ class Synesthesizer():
                     self.all_combos[color][space].appendleft(word)
                     return word
                 else:
-                    if space>=8:
+                    if space >= 8:
                         return check_fit(floor(space/2), color) + check_fit(ceil(space/2), color)
                     else:
-                        return "!"*int(space)
+                        return "!" * int(space)
 
             else:
                 shift = randint(0,4)
-                return check_fit(floor(space/2)-shift, color) + check_fit(ceil(space/2)+shift, color)
+                return check_fit(floor(space/2) - shift, color) + check_fit(ceil(space/2) + shift, color)
 
 
         def get_space(x,y, color):
             x1 = x
-            while x<self.img.size[0] and webcolors.rgb_to_name(pixor[x,y]) is color:
-                x+=1
-            return x-x1
+            while x < self.img.size[0] and webcolors.rgb_to_name(pixor[x,y]) is color:
+                x += 1
+            return x - x1
 
         def paint_picture(x, y):
             while y < self.img.size[1]:
@@ -126,18 +126,18 @@ class Synesthesizer():
 
                 string = check_fit(space, color)
                 drawn = self.texter.render(string, True, pixel)
-                self.synpic.blit(drawn, (x*letWidth,y*letHeight))
-                x+=(len(string))
+                self.synpic.blit(drawn, (x * letWidth, y * letHeight))
+                x += (len(string))
                 if x >= self.img.size[0]:
-                    y+=1
-                    x=0
+                    y += 1
+                    x = 0
 
         paint_picture(x,y)
 
         name = ''.join([choice(string.ascii_letters + string.digits) for n in range(30)])
-        PyImage.save(self.synpic, 'creations/' +name + '.jpg')
+        PyImage.save(self.synpic, 'creations/' + name + '.jpg')
 
-        return 'creations/' +name + '.jpg'
+        return 'creations/' + name + '.jpg'
 
 def find_fonts():
     monospaced = ["bitstreamverasansmono", "consolas", "luximono", "lucidaconsole", "andalemono", "couriernew", 'inconsolata', 'courier', 'monaco']
