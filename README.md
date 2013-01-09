@@ -1,6 +1,8 @@
 #Synesthesia
 Takes in an image and replace the colors with words semantically related to the color.
 
+Project in action: <http://www.jennazeigen.com/Synesthesia>
+
 So, if there's a red patch in your image, in that area in the resulting image, you might find the words "cherry", "communism", "anger", and "balloon"
 
 Concept: Natan Last, Execution: Jenna Zeigen (me!)
