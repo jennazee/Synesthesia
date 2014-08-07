@@ -1,8 +1,6 @@
 #Synesthesia
 Takes in an image and replace the colors with words semantically related to the color.
 
-Project in action: <http://www.jennazeigen.com/Synesthesia>
-
 So, if there's a red patch in your image, in that area in the resulting image, you might find the words "cherry", "communism", "anger", and "balloon"
 
 Concept: Natan Last, Execution: Jenna Zeigen (me!)
@@ -17,16 +15,16 @@ I've blogged about this project and more how each of the methods work at <http:/
 
 --------
 ##GUI
-![Initial Screen](http://www.jennazeigen.com/Github-Readme-Imgs/initial.png "Initial Screen")
+![Initial Screen](http://jennazeigen.com/Github-Readme-Imgs/initial.png "Initial Screen")
 
 While synthesizer.py also works as a command line tool, it also has a web app interface powered by Flask. You upload your image, which will them be previewed, and then choose all the conditions to modify the parameters.
 
-![GUI shown with preview of uploaded image](http://www.jennazeigen.com/Github-Readme-Imgs/upload.png "Preview of uploaded image")
+![GUI shown with preview of uploaded image](http://jennazeigen.com/Github-Readme-Imgs/upload.png "Preview of uploaded image")
 
 
 When you submit your image and choices, the result will appear and you can then click on the preview to download the image.
 
-![GUI shown with resulting image](http://www.jennazeigen.com/Github-Readme-Imgs/output_better.png "Showing the resulting image")
+![GUI shown with resulting image](http://jennazeigen.com/Github-Readme-Imgs/output_better.png "Showing the resulting image")
 
 --------
 ##API
